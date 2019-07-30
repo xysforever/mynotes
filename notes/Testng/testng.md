@@ -526,3 +526,36 @@ public class ThirdTest {
 ![dataProvider参数测试](pic/dataProvider参数测试.png)
 
 会发现，定义的数组中的所有的参数都被执行。
+
+## 9. TestNG 多线程运行用例
+
+> TestNG 是唯一自身支持多程技术的单元测试框架。虽然代码级别的单元测试运行得很快，多线程的意义并不大。但如果是 UI 自动化测试的话运行速度就会非常慢，这个时候多线程技术就会变得很重要。
+
+### 多线程的配置
+
+接下来就是 *testng.xml* 文件的配置，请看下面。
+
+``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite" parallel="classes" thread-count="4">
+    <test name="简单测试">
+        <classes>
+            <class name="sample1.SecondTest"/>
+            <class name="sample2.ThirdTest"/>
+        </classes>
+    </test>
+</suite>
+```
+
++ `parallel` 设置多线程的级别划分。
+
+  + `parallel="method"` TestNG 将在不同的线程中运行所有的测试方法。依赖方法也将在单独的线程中运行测试，但他们将尊重你指定的顺序。
+  
+  + `parallel="tests"` TestNG 将在同一个线程中运行相同的标记的，但是每个标记将在一个单独的线程中。这将允许你将所有非线程安全的类分组在同一个中，并保证它们将在同一个线程中运行，同时利用尽可能多的县城来运行测试。
+
+  + `parallel="classes"` TestNG 将在同一个线程中同一个类中的所有方法，但是每个类都将在一个单独的线程中运行。
+
+  + `parallel="instances"` TestNG 将在同一个线程中运行相同实例中的所有方法，但是在两个不同实例上的两个方法将在不同的线程中运行。
+
+    + thread-count 用于指定线程的个数。
