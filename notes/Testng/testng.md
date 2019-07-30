@@ -9,7 +9,7 @@
 在 *IntelliJ IDEA* 中创建 Java 项目，选择 ***Maven*** ，*Maven* 是 **Apache Maven是一个软件项目管理和理解工具。基于项目对象模型（POM）的概念，Maven可以从一个中心信息管理项目的构建，报告和文档** 。创建完成后，在 *pom.xml* 文件中加入如下的内容。
 
 ``` xml
-<repositories>
+    <repositories>
         <repository>
             <id>jcenter</id>
             <name>bintray</name>
@@ -262,6 +262,7 @@ public class FirstTest {
             <class name="sample1.FirstTest"/>
         </classes>
     </test>
+</suite>
 ```
 
 右键 ***testng.xml*** 文件，然后点击 `run`，这个配置将运行标签为 *高* 的用例，也就是前两个用例。具体一些参数的解析如下。
