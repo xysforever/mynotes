@@ -559,3 +559,68 @@ public class ThirdTest {
   + `parallel="instances"` TestNG 将在同一个线程中运行相同实例中的所有方法，但是在两个不同实例上的两个方法将在不同的线程中运行。
 
     + thread-count 用于指定线程的个数。
+
+## 10. TestNG 其他使用技巧
+
+这里直接使用例子来演示，使用的类为 *sample/FourthTest* ，具体的代码如下。
+
+``` java
+package sample2;
+
+import org.testng.annotations.Test;
+
+public class FourthTest {
+
+    // 该条用例跳过执行
+    @Test(enabled = false)
+    public void FourthTest(){
+        System.out.println("This is FourthTest1");
+    }
+
+    // 设置用例超时时间
+    @Test(timeOut = 3000)
+    public void FourthTest2(){
+        System.out.println("This is FourthTest2");
+    }
+
+    // 设置用例抛出的异常类型
+    @Test(expectedExceptions = RuntimeException.class)
+    public void FourthTest3(){
+        Assert.assertEquals(2/0,  1);
+    }
+}
+```
+
+一些参数的解析如下。
+
++ `enabled` 设置用例是否跳过执行，默认为 *true*，表示不跳过。*false* 表示跳过执行。
+
++ `timeOut` 设置用例运行的超时时间， 3000 单位为 **毫秒** ，当用例运行时间超过 3000 毫秒则判定为失败。不管用例本身是否运行失败。
+
++ `expectedExceptions` 用来预设用例用例运行会出现的异常。例如 *2/0* 将会抛出 **RuntimeException** 类型的异常，如果出现异常则表示用例实行成功。
+
+运行结果如下图所示。
+
+![testng使用技巧](pic/testng使用技巧.png)
+
+## 11. TestNG 生成测试报告
+
+### 11.1 通过 Maven 生成报告
+
+切换到项目的根目录下，通过 `mvn test` 命令运行测试。如下图。
+
+![mvn生成测试报告](pic/mvn生成测试报告.png)
+
+然后打开 *target/surefire-reports/index.html* ，将会看到整个项目的运行结果。
+
+### 11.2 通过 Intellij IDEA 生成报告
+
+在 *Intellij IDEA* 中默认运行测试用例是不会生成 *HTML* 报告的，需要进行简单的配置。首先打开配置的面板，具体步骤如下图。
+
+![idea配置](pic/idea配置.png)
+
+然后就是进行具体的设置了，如下图。
+
+![idea生成测试报告](pic/idea生成测试报告.png)
+
+然后点击 `OK` 按钮，完成设置。接下来用 *Intellij IDEA* 运行 *TestNG* 测试用例一样可以生成报告了。
