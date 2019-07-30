@@ -486,3 +486,43 @@ public class ThirdTest {
 会发现运行的结果参数就是我们在 *testng.xml* 中设置的值。
 
 ### 通过 `@DataProvider` 实现参数化
+
+本次实例使用 *simple2/ThirdTest.java* 这个类，然后 `@DataProvider` 的使用方法如下面代码所示。
+
+``` java
+package sample2;
+
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+public class ThirdTest {
+
+    // 定义对象数组
+    @DataProvider(name = "add")
+    public Object[][] user(){
+        return new Object[][]{
+                {3, 2, 5},
+                {2, 2, 4},
+                {3, 3, 7}
+        };
+    }
+
+    @Test(dataProvider = "add")
+    public void ThirdTest(int add1, int add2, int result){
+        Assert.assertEquals(add1 + add2, result);
+    }
+}
+```
+
+其中的某些参数解析如下：
+
++ `@DataProvider` 定义对象数组，数组名称为 *add*。
+
+在 *ThirdTest()* 中通过 `dataProvider="add"` 来调用定义的对象数组，并通过参数获取相应的测试数据。
+
+直接在 *ThirdTest* 类上右击，点击 `Run` ，运行此类，不需要在 *testng.xml* 文件中配置。执行结果如下图所示。
+
+![dataProvider参数测试](pic/dataProvider参数测试.png)
+
+会发现，定义的数组中的所有的参数都被执行。
