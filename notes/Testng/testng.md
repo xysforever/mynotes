@@ -428,3 +428,61 @@ public class SecondTest {
 ```
 
 + `dependsOnGroups`  来设置组的依赖，*SecondTest()* 和 *SecondTest2()* 同属于一个 ***test*** 组，*SecondTest3()* 依赖于 ***test*** 组，该组中有一条用例执行失败，则 *SecondTest3()* 不再执行。
+
+## 8. TestNG 用例参数化
+
+> 参数化也是测试用例中常用的技巧之一，它可以增加用例的可配置性和减少相同用例的编写。
+
+### 8.1 通过 `@Parameters` 实现参数化
+
+项目结构还是和之前的一样，这次使用的是 *simple2/ThirdTest.java* 这个类。具体的代码如下面所示。
+
+``` java
+package sample2;
+
+import org.testng.Assert;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+
+public class ThirdTest {
+    @Test
+    @Parameters({"add1", "add2", "result"})
+    public void ThirdTest(int add1, int add2, int result){
+        Assert.assertEquals(add1 + add2, result);
+        System.out.println("add1 = " + add1 + "; " + "add2 = " + add2 + "; " + "result = " + result);
+    }
+}
+```
+
+然后就是定义 ***testng.xml*** 文件，具体的配置如下所示。
+
+``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="简单测试">
+        <parameter name="add1" value="2"/>
+        <parameter name="add2" value="3"/>
+        <parameter name="result" value="5"/>
+        <classes>
+            <class name="sample2.ThirdTest"></class>
+        </classes>
+    </test>
+</suite>
+```
+
+具体的参数解析如下。
+
++ `<parameter.../>` 定义测试数据
+
+  + `name` 定义数据的名字，在测试用例中通过该名字来获取对应的  `value` 。
+
+  + `value` 定义测试数据，通过对应的 `name` 来获取该值。
+
+运行 `testng.xml` 的结果如下图所示。
+
+![parameter参数测试](pic/parameter参数测试.png)
+
+会发现运行的结果参数就是我们在 *testng.xml* 中设置的值。
+
+### 通过 `@DataProvider` 实现参数化
