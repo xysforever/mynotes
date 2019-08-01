@@ -25,3 +25,21 @@ HTTP(Hypertext Transfer Protocol, 超文本传输协议) 是一个应用层协�
 #### HTTP 是无状态的
 
 如上所述， HTTP 是无连接的，它是 HTTP 作为无状态协议的直接结果。服务器和客户端尽在当前请求期间相互了解。之后，它们两个都忘记了彼此。由于协议的这种性质，客户端和浏览器都不能在跨网页的不同请求之间保留信息。
+
+### 1.3 HTTP/1.0 和 HTTP/1.1 的区别
+
+### 1.4 基础架构
+
+下图显示了 Web 应用程序的一个非常基本的体系结构，并描述了 HTTP 的位置。
+
+![Web 应用程序的基础体系架构](https://img-blog.csdnimg.cn/20190716122212888.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE1NDE5NDY=,size_16,color_FFFFFF,t_70)
+
+HTTP 协议就是在 Client 和 Server 之间的一层。主要用来传输请求和响应的数据。先来理解下面两个概念。
+
+#### 1.4.1 客户端、
+
+HTTP 客户端以请求方法，URI 和协议版本的形式向服务器发送请求，然后是类似 MIME 的消息，其中包含请求修饰符，客户端信息以及 TCP/IP 连接上的可能正文内容。客户端在电脑 PC 端一般指的就是浏览器，手机中 app 也是浏览器。
+
+#### 1.4.2 服务端
+
+HTTP 服务器以状态行相应，包括消息的协议版本和成功或错误代码，然后是包含服务器信息，实体元信息和可能的实体主体内容的类似 MIME 的消息。
