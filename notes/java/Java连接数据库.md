@@ -23,6 +23,10 @@
 
 ## 3. 读取配置文件方式
 
+[参考这篇文章](https://www.cnblogs.com/sebastian-tyd/p/7895182.html)
+
+***第一种方式 `ClassLoder` 需要研究***
+
 ## 4. `c3p0` 连接池连接数据库
 
 ## 5. 数据库连接池
