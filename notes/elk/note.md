@@ -197,25 +197,51 @@ sudo yum makecache
 
 > 注：所有节点都可以做 Master/data 节点，设置为 Master 说明该节点有作为 Master 的资格，默认设置为 true，默认集群中的第一台机器为 Master。data 节点存储数据，不设置默认为 true。
 
-| 类型 | IP | 名称 |
+||||
 | :---- | :---- | :---- |
+| 类型 | IP | 名称 |
 | Master/data | 192.168.16.17 | elk-node1 |
 | Master/data | 192.168.16.3 | elk-node2 |
 | Master/data | 192.168.16.4 | elk-node3 |
 |  |  |  |
 
-##### a. 重要的 Elasticsearch 配置(https://cloud.tencent.com/developer/article/1454003)
+##### a. 重要的 Elasticsearch 配置
 
 + `path.data` 和 `path.logs`  
-如果正在使用 .zip 或 .tar.gz 文件归档，data 和 logs 目录在 $ES_HOME 下。如果这些重要文件夹保存在默认位置，则 ElasticSearch 升级到新版本时，很有可能被删除。所以在生产环境中，肯定要更改数据和日志文件夹的位置。
+如果正在使用 .zip 或 .tar.gz 文件归档，data 和 logs 目录在 $ES_HOME 下。如果这些重要文件夹保存在默认位置，则 ElasticSearch 升级到新版本时，很有可能被删除。所以在生产环境中，肯定要更改数据和日志文件夹的位置。  
+***补充说明***：在生产环境下，应用程序的数据和日志一般需要配置到独立的磁盘分区下。比如 `/data` 目录作为独立的数据分区， `/var/log` 作为应用程序日志分区。这样做的好处是，防止因应用程序数据或日志增长，撑爆 OS 分区。
 
 + `cluster.name`  
 某个节点只有和集群下的其他节点共享（使用相同的） `cluster.name` 才能加入到同一个集群。一定要确保不能在不同的环境中使用相同的集群名称，否则，节点可能会加入错误的集群中。
 
 + `node.name`  
 默认情况下， ElasticSearch 将使用随机生成的 uuid 的前 7 个字符作为节点 id，请注意，节点 id 是持久化的，并且在节点重新启动时不会改变，因此默认节点名称不会更改。  
-也可以使用服务器的 HOSTNAME 作为节点的名称。  
+也可以使用服务器的 *HOSTNAME* 作为节点的名称。  
 `node.name: ${HOSTNAME}`
+
++ `network.host`  
+默认情况下， ElasticSearch 仅仅绑定回环地址，比如 *127.0.0.1* 和 *[::1]* 。这足以在服务器上运行单个开发节点。  
+为了与其他服务器上的节点进行通信并形成集群，你的节点需要将绑定到非环回地址。虽然有很多的网络设置，但通常只需要配置一下 `network.host`。  
+一旦自定义设置了 `network.host` ，ElasticSearch 会假定你正在从开发模式转移到生产模式，并将许多系统启动检查从警告升级到异常。  
+**默认情况下， ElasticSearch 假定你正在开发模式下工作。** 假如未正确配置上述任何设置，则会向日志文件写入警告，但是能正常启动并运行 *ElasticSearch* 节点。  
+**一旦配置了 `network.host` 之类的网络设置， ElasticSearch 就会假定您正在转向生产并将上述警告升级为异常。** 这些异常将阻止您的 ElasticSearch 节点启动。这是一项重要的安全措施，可确保您不会因服务器配置错误而丢失数据。  
+
+``` shell
+# 为本机 IP
+network.host: 192.168.16.*
+```
+
++ `Discovery settings`  
+在开始生产之前，应该配置两个重要的 discovery 和 cluster 设置，以便集群中的节点可以相互发现并选择主节点。
+
+  + `discovery.seed_hosts`  
+开箱即用，没有任何网络配置， ElasticSearch 将绑定到可用的环回地址，并将扫描本地端口 9300 到 9305 以尝试连接到在同一服务器上运行的其他节点，这提供了自动集群体验，无需进行任何配置。  
+如果要在其他主机上形成包含节点的集群，则必须使用 `discovery.seed_hosts` 设置提供集群中其他节点的列表，这些节点符合主要条件且可能是实时且可联系的，以便为发现设定种子。此设置通常包含集群中所有符合主节点的节点地址。此设置包含主机数组或逗号分隔的字符串。每个值应采用 *host: port* 或 *port* 的形式（其中 *port* 默认设置为 `transport.profiles.default.port` ，如果未设置则返回 `transport.port`）。请注意，必须将 IPV6 主机至于括号内。此设置默认值为 `127.0.0.10`,[::1]。  
+如果未指定，端口将默认为 `transport.profiles.default.port` 并回退到 `reansport.port`。  
+如果主机名解析为多个 IP 地址，则该节点将尝试发现所有已解析地址的其他节点。  
+  + `cluster.initial_master_nodes`  
+当您在第一次启动全新的 ElasticSearch 集群时，会出现一个集群引导步骤，该步骤确定在第一次选举中计票的主要合格节点集。在开发模式下，如果为配置发现配置，则此步骤由节点本身自动执行。由于此节点引导本质上是不安全的，因此当您在生产环境下启动全新集群式，必须明确列出符合条件的节0点的名称或 IP 地址，这些节点的投票应在第一次选举中计算，使用 `cluster.initial_master_nodes` 设置设置此列表。  
+初始主节点可以通过
 
 设置完成的参数
 
