@@ -151,7 +151,7 @@ sudo yum makecache
 配置完 yum 源之后，使用命令 `yum repolist` 即可查看 yum 源的信息。
 
 ## 2. 搭建 ELK
-
+  
 > 简介：ELK 是一整套解决方案，是三个软件产品的首字母缩写， Elasticsearch、 Logstash 和 Kibana。这三款软件都是开源产品，通常是配合使用，简称为 *ELK 协议栈*。
 
 日志主要包括系统日志、应用程序日志和安全日志。系统运维和开发可以通过日志了解服务器软硬件信息、检查配置过程中的错误击错误发生的原因。经常分析日志可以了解服务器的负荷，性能安全，从而及时采取措施纠正错误。
@@ -221,7 +221,7 @@ systemctl disable firewalld
 
 > 注：所有节点都可以做 Master/data 节点，设置为 Master 说明该节点有作为 Master 的资格，默认设置为 true，默认集群中的第一台机器为 Master。data 节点存储数据，不设置默认为 true。
 
-||||
+|  |  |  |
 | :---- | :---- | :---- |
 | 类型 | IP | 名称 |
 | Master/data | 192.168.16.17 | elk-node1 |
