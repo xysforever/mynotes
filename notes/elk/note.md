@@ -2,8 +2,8 @@
 
 ``` text
 准备：
-VMware 15
-Centos 7 mini
+VMware Workstation Pro 15
+CentOS-7-x86_64-Minimal-1810
 ```
 
 ## 1. 配置环境
@@ -148,6 +148,8 @@ sudo sed -i `s$releasever/7/g` /etc/yum.repos.d/CentOS-Base.repo
 sudo yum makecache
 ```
 
+配置完 yum 源之后，使用命令 `yum repolist` 即可查看 yum 源的信息。
+
 ## 2. 搭建 ELK
 
 > 简介：ELK 是一整套解决方案，是三个软件产品的首字母缩写， Elasticsearch、 Logstash 和 Kibana。这三款软件都是开源产品，通常是配合使用，简称为 *ELK 协议栈*。
@@ -189,7 +191,29 @@ sudo yum makecache
 
 #### 2.1.1 Selinux 和防火墙的设置
 
++ 关闭 selinux  
+
+``` bash
+# 永久关闭 selinux（禁止开机启动）
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+# 临时关闭 selinux
+setenforce 0
+```
+
++ 关闭防火墙
+
+``` bash
+# 临时关闭防火墙
+systemctl stop firewalld
+# 永久关闭防火墙（禁止开机自启）
+systemctl disable firewalld
+```
+
 #### 2.1.2 安装 Logstash 依赖包 JDK
+
+[java 12 下载](https://download.oracle.com/otn-pub/java/jdk/12.0.2+10/e482c34c86bd4bf8b56c0b35558996b9/jdk-12.0.2_linux-x64_bin.rpm)
+
+[java 11 LTS 下载](https://download.oracle.com/otn/java/jdk/11.0.4+10/cf1bbcbf431a474eb9fc550051f4ee78/jdk-11.0.4_linux-x64_bin.rpm)
 
 安装 `apt -y install jdk-12.0.2_linux-x64_bin.rpm` 可以将所缺的依赖一起安装。使用 `java --version` 检查 Java 是否安装成功。成功将返回 Java 的版本。
 
