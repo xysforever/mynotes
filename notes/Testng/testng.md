@@ -9,22 +9,22 @@
 在 *IntelliJ IDEA* 中创建 Java 项目，选择 ***Maven*** ，*Maven* 是 **Apache Maven是一个软件项目管理和理解工具。基于项目对象模型（POM）的概念，Maven可以从一个中心信息管理项目的构建，报告和文档** 。创建完成后，在 *pom.xml* 文件中加入如下的内容。
 
 ``` xml
-    <repositories>
-        <repository>
-            <id>jcenter</id>
-            <name>bintray</name>
-            <url>http://jcenter.bintray.com</url>
-        </repository>
-    </repositories>
+	<repositories>
+		<repository>
+			<id>jcenter</id>
+			<name>bintray</name>
+			<url>http://jcenter.bintray.com</url>
+		</repository>
+	</repositories>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.10</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.10</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 ```
 
 然后在右下角的提示框中点击 *enable* ，开始自动下载 Testng 所需要的依赖。
@@ -62,16 +62,16 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite1" verbose="1" >
   <test name="Nopackage" >
-    <classes>
-       <class name="NoPackageTest" />
-    </classes>
+	<classes>
+	   <class name="NoPackageTest" />
+	</classes>
   </test>
 
   <test name="Regression1">
-    <classes>
-      <class name="test.sample.ParameterSample"/>
-      <class name="test.sample.ParameterTest"/>
-    </classes>
+	<classes>
+	  <class name="test.sample.ParameterSample"/>
+	  <class name="test.sample.ParameterTest"/>
+	</classes>
   </test>
 </suite>
 ```
@@ -90,7 +90,7 @@
 
   + `<class>...</class>` 表示定义一个测试类。
 
-    + `name` 指定要运行的测试类。
+	+ `name` 指定要运行的测试类。
 
 ## 4. 测试级别设置
 
@@ -114,12 +114,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="简单测试">
-        <packages>
-            <package name="sample"></package>
-            <package name="sample1"></package>
-        </packages>
-    </test>
+	<test verbose="2" preserve-order="true" name="简单测试">
+		<packages>
+			<package name="sample"></package>
+			<package name="sample1"></package>
+		</packages>
+	</test>
 </suite>
 ```
 
@@ -143,12 +143,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="简单测试">
-        <classes>
-            <class name="sample.FirstTest"/>
-            <class name="sample1.ThirdTest"/>
-        </classes>
-    </test>
+	<test verbose="2" preserve-order="true" name="简单测试">
+		<classes>
+			<class name="sample.FirstTest"/>
+			<class name="sample1.ThirdTest"/>
+		</classes>
+	</test>
 </suite>
 ```
 
@@ -166,20 +166,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="简单测试">
-        <classes>
-            <class name="sample.FirstTest">
-                <methods>
-                    <include name="FirstTest"/>
-                </methods>
-            </class>
-            <class name="sample1.ThirdTest">
-                <methods>
-                    <include name="ThirdTest"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+	<test verbose="2" preserve-order="true" name="简单测试">
+		<classes>
+			<class name="sample.FirstTest">
+				<methods>
+					<include name="FirstTest"/>
+				</methods>
+			</class>
+			<class name="sample1.ThirdTest">
+				<methods>
+					<include name="ThirdTest"/>
+				</methods>
+			</class>
+		</classes>
+	</test>
 </suite>
 ```
 
@@ -199,7 +199,7 @@
 
 ## 5. TestNG 用例分组
 
-测试用力的划分
+测试用例的划分
 
 ### a. 根据用例的重要程度划分
 
@@ -224,25 +224,25 @@ import org.testng.annotations.Test;
 
 @Test(groups = {"功能测试"})
 public class FirstTest {
-    @Test(groups = {"高", "正常"})
-    public void FirstTest(){
-        System.out.println("This is sample1 FirstTest");
-    }
+	@Test(groups = {"高", "正常"})
+	public void FirstTest(){
+		System.out.println("This is sample1 FirstTest");
+	}
 
-    @Test(groups = {"高", "正常"})
-    public void FirstTest2(){
-        System.out.println("This is sample1 FirstTest2");
-    }
+	@Test(groups = {"高", "正常"})
+	public void FirstTest2(){
+		System.out.println("This is sample1 FirstTest2");
+	}
 
-    @Test(groups = {"中", "正常"})
-    public void FirstTest3(){
-        System.out.println("This is sample1 FirstTest");
-    }
+	@Test(groups = {"中", "正常"})
+	public void FirstTest3(){
+		System.out.println("This is sample1 FirstTest");
+	}
 
-    @Test(groups = {"低", "异常"})
-    public void FirstTest4(){
-        System.out.println("This is sample1 FirstTest2");
-    }
+	@Test(groups = {"低", "异常"})
+	public void FirstTest4(){
+		System.out.println("This is sample1 FirstTest2");
+	}
 }
 ```
 
@@ -252,16 +252,16 @@ public class FirstTest {
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="简单测试">
-        <groups>
-            <run>
-                <include name="高"/>
-            </run>
-        </groups>
-        <classes>
-            <class name="sample1.FirstTest"/>
-        </classes>
-    </test>
+	<test verbose="2" preserve-order="true" name="简单测试">
+		<groups>
+			<run>
+				<include name="高"/>
+			</run>
+		</groups>
+		<classes>
+			<class name="sample1.FirstTest"/>
+		</classes>
+	</test>
 </suite>
 ```
 
@@ -281,17 +281,17 @@ public class FirstTest {
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="简单测试">
-        <groups>
-            <run>
-                <exclude name="异常"/>
-                <include name="功能测试"/>
-            </run>
-        </groups>
-        <classes>
-            <class name="sample1.FirstTest"/>
-        </classes>
-    </test>
+	<test verbose="2" preserve-order="true" name="简单测试">
+		<groups>
+			<run>
+				<exclude name="异常"/>
+				<include name="功能测试"/>
+			</run>
+		</groups>
+		<classes>
+			<class name="sample1.FirstTest"/>
+		</classes>
+	</test>
 </suite>
 ```
 
@@ -316,25 +316,25 @@ import org.testng.annotations.Test;
 
 @Test(groups = {"功能测试"})
 public class FirstTest {
-    @Test(groups = {"高", "正常"}, priority = 4)
-    public void FirstTest(){
-        System.out.println("This is sample1 FirstTest");
-    }
+	@Test(groups = {"高", "正常"}, priority = 4)
+	public void FirstTest(){
+		System.out.println("This is sample1 FirstTest");
+	}
 
-    @Test(groups = {"高", "正常"}, priority = 3)
-    public void FirstTest2(){
-        System.out.println("This is sample1 FirstTest2");
-    }
+	@Test(groups = {"高", "正常"}, priority = 3)
+	public void FirstTest2(){
+		System.out.println("This is sample1 FirstTest2");
+	}
 
-    @Test(groups = {"中", "正常"}, priority = 2)
-    public void FirstTest3(){
-        System.out.println("This is sample1 FirstTest3");
-    }
+	@Test(groups = {"中", "正常"}, priority = 2)
+	public void FirstTest3(){
+		System.out.println("This is sample1 FirstTest3");
+	}
 
-    @Test(groups = {"低", "异常"}, priority = 1)
-    public void FirstTest4(){
-        System.out.println("This is sample1 FirstTest4");
-    }
+	@Test(groups = {"低", "异常"}, priority = 1)
+	public void FirstTest4(){
+		System.out.println("This is sample1 FirstTest4");
+	}
 }
 ```
 
@@ -352,18 +352,18 @@ public class FirstTest {
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="简单测试">
-        <classes>
-            <class name="sample1.FirstTest">
-                <methods>
-                    <include name="FirstTest4"/>
-                    <include name="FirstTest2"/>
-                    <include name="FirstTest3"/>
-                    <include name="FirstTest"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+	<test verbose="2" preserve-order="true" name="简单测试">
+		<classes>
+			<class name="sample1.FirstTest">
+				<methods>
+					<include name="FirstTest4"/>
+					<include name="FirstTest2"/>
+					<include name="FirstTest3"/>
+					<include name="FirstTest"/>
+				</methods>
+			</class>
+		</classes>
+	</test>
 </suite>
 ```
 
@@ -388,15 +388,15 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class SecondTest {
-    @Test
-    public void SecondTest(){
-        Assert.assertEquals(3 + 1 , 5);
-    }
+	@Test
+	public void SecondTest(){
+		Assert.assertEquals(3 + 1 , 5);
+	}
 
-    @Test(dependsOnMethods = {"SecondTest"})
-    public void SecondTest2(){
-        Assert.assertEquals(3 + 2, 5);
-    }
+	@Test(dependsOnMethods = {"SecondTest"})
+	public void SecondTest2(){
+		Assert.assertEquals(3 + 2, 5);
+	}
 }
 ```
 
@@ -411,20 +411,20 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class SecondTest {
-    @Test(groups = {"test"})
-    public void SecondTest(){
-        Assert.assertEquals(3 + 1 , 5);
-    }
+	@Test(groups = {"test"})
+	public void SecondTest(){
+		Assert.assertEquals(3 + 1 , 5);
+	}
 
-    @Test(groups = {"test"})
-    public void SecondTest2(){
-        Assert.assertEquals(3 + 2, 5);
-    }
+	@Test(groups = {"test"})
+	public void SecondTest2(){
+		Assert.assertEquals(3 + 2, 5);
+	}
 
-    @Test(dependsOnGroups = {"test"})
-    public void SecondTest3(){
-        Assert.assertEquals(3 + 2, 5);
-    }
+	@Test(dependsOnGroups = {"test"})
+	public void SecondTest3(){
+		Assert.assertEquals(3 + 2, 5);
+	}
 }
 ```
 
@@ -446,12 +446,12 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class ThirdTest {
-    @Test
-    @Parameters({"add1", "add2", "result"})
-    public void ThirdTest(int add1, int add2, int result){
-        Assert.assertEquals(add1 + add2, result);
-        System.out.println("add1 = " + add1 + "; " + "add2 = " + add2 + "; " + "result = " + result);
-    }
+	@Test
+	@Parameters({"add1", "add2", "result"})
+	public void ThirdTest(int add1, int add2, int result){
+		Assert.assertEquals(add1 + add2, result);
+		System.out.println("add1 = " + add1 + "; " + "add2 = " + add2 + "; " + "result = " + result);
+	}
 }
 ```
 
@@ -461,14 +461,14 @@ public class ThirdTest {
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="简单测试">
-        <parameter name="add1" value="2"/>
-        <parameter name="add2" value="3"/>
-        <parameter name="result" value="5"/>
-        <classes>
-            <class name="sample2.ThirdTest"></class>
-        </classes>
-    </test>
+	<test verbose="2" preserve-order="true" name="简单测试">
+		<parameter name="add1" value="2"/>
+		<parameter name="add2" value="3"/>
+		<parameter name="result" value="5"/>
+		<classes>
+			<class name="sample2.ThirdTest"></class>
+		</classes>
+	</test>
 </suite>
 ```
 
@@ -499,20 +499,20 @@ import org.testng.annotations.Test;
 
 public class ThirdTest {
 
-    // 定义对象数组
-    @DataProvider(name = "add")
-    public Object[][] user(){
-        return new Object[][]{
-                {3, 2, 5},
-                {2, 2, 4},
-                {3, 3, 7}
-        };
-    }
+	// 定义对象数组
+	@DataProvider(name = "add")
+	public Object[][] user(){
+		return new Object[][]{
+				{3, 2, 5},
+				{2, 2, 4},
+				{3, 3, 7}
+		};
+	}
 
-    @Test(dataProvider = "add")
-    public void ThirdTest(int add1, int add2, int result){
-        Assert.assertEquals(add1 + add2, result);
-    }
+	@Test(dataProvider = "add")
+	public void ThirdTest(int add1, int add2, int result){
+		Assert.assertEquals(add1 + add2, result);
+	}
 }
 ```
 
@@ -540,12 +540,12 @@ public class ThirdTest {
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite" parallel="classes" thread-count="4">
-    <test name="简单测试">
-        <classes>
-            <class name="sample1.SecondTest"/>
-            <class name="sample2.ThirdTest"/>
-        </classes>
-    </test>
+	<test name="简单测试">
+		<classes>
+			<class name="sample1.SecondTest"/>
+			<class name="sample2.ThirdTest"/>
+		</classes>
+	</test>
 </suite>
 ```
 
@@ -559,7 +559,7 @@ public class ThirdTest {
 
   + `parallel="instances"` TestNG 将在同一个线程中运行相同实例中的所有方法，但是在两个不同实例上的两个方法将在不同的线程中运行。
 
-    + thread-count 用于指定线程的个数。
+	+ thread-count 用于指定线程的个数。
 
 ## 10. TestNG 其他使用技巧
 
@@ -572,23 +572,23 @@ import org.testng.annotations.Test;
 
 public class FourthTest {
 
-    // 该条用例跳过执行
-    @Test(enabled = false)
-    public void FourthTest(){
-        System.out.println("This is FourthTest1");
-    }
+	// 该条用例跳过执行
+	@Test(enabled = false)
+	public void FourthTest(){
+		System.out.println("This is FourthTest1");
+	}
 
-    // 设置用例超时时间
-    @Test(timeOut = 3000)
-    public void FourthTest2(){
-        System.out.println("This is FourthTest2");
-    }
+	// 设置用例超时时间
+	@Test(timeOut = 3000)
+	public void FourthTest2(){
+		System.out.println("This is FourthTest2");
+	}
 
-    // 设置用例抛出的异常类型
-    @Test(expectedExceptions = RuntimeException.class)
-    public void FourthTest3(){
-        Assert.assertEquals(2/0,  1);
-    }
+	// 设置用例抛出的异常类型
+	@Test(expectedExceptions = RuntimeException.class)
+	public void FourthTest3(){
+		Assert.assertEquals(2/0,  1);
+	}
 }
 ```
 
