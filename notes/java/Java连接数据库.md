@@ -23,14 +23,14 @@
 
 ## 2. Java 传统的连接方式
 
-+ 首先就是获取连接
+### 2.1 首先就是获取连接
 
 ``` java
 // 动态加载 mysql 驱动
 class.forName("com.mysql.cj.jdbc.Driver");
 ```
 
-+ 获取连接信息
+### 2.2 获取连接信息
 
 ``` java
 // 驱动程序名(Mysql 8.0)
@@ -43,7 +43,7 @@ String user = "mysqluser";
 String password = "password";
 ```
 
-+ 加载驱动程序
+### 2.3 加载驱动程序
 
 ``` java
 // 加载驱动程序
@@ -56,13 +56,18 @@ Statement statement = connection.createStatement();
 ResultSet resultSet = statement.executeQuery(sql);
 ```
 
-+ 完整代码
+### 2.4 完整代码
 
 ``` java
+package mysql;
+
 import java.sql.*;
 
-public class MysqlConnect {
-    public static Connection getConnection() throws ClassNotFoundException {
+/**
+ * @author xys
+ */
+public class ConnectMysql {
+    public static Connection getConnection() throws ClassNotFoundException, SQLException {
         String url = "jdbc:mysql://localhost:3306/databaseName";
         String user = "mysqluser";
         String password = "password";
@@ -74,7 +79,35 @@ public class MysqlConnect {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        if (connection != null) {
+            System.out.println("数据库连接成功");
+        } else {
+            System.out.println("数据库连接失败");
+            connection.close();
+        }
         return connection;
+    }
+
+    public void getResult() throws ClassNotFoundException, SQLException {
+        // 实例化 Statement 对象
+        Statement statement = getConnection().createStatement();
+        // 要执行的 Mysql 数据库操作语句（增、删、改、查）
+        String sql = "";
+        // 展开结果集数据库
+        ResultSet resultSet = statement.executeQuery(sql);
+        while (resultSet.next()) {
+            // 通过字段检索
+            int id = resultSet.getInt("id");
+            String name = resultSet.getString("name");
+
+            // 输出数据
+            System.out.println("ID : " +id);
+            System.out.println("name :" + name);
+        }
+        // 完成后需要依次关闭
+        resultSet.close();
+        statement.close();
+        getConnection().close();
     }
 }
 ```

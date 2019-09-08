@@ -1,6 +1,6 @@
 # Centos7
 
-``` text
+```text
 准备：
 VMware Workstation Pro 15
 CentOS-7-x86_64-Minimal-1810
@@ -10,13 +10,13 @@ CentOS-7-x86_64-Minimal-1810
 
 ### 1.1 首先配置静态网络地址
 
-``` bash
+```bash
 vi /etc/sysconfig/network-scripts/ifcfg-ens33
 ```
 
 修改如下内容。
 
-``` text
+```text
 # 设置 IP 地址为静态 IP
 BOOTPROTO=static
 # 随 network 服务启动
@@ -35,7 +35,7 @@ DNS1=192.168.16.2
 
 ### 1.2 测试网络是否通畅
 
-``` bash
+```text
 # 重启网络
 systemctl restart network
 # 查看 ip，查看 ens33 端口IP是否出现
@@ -46,7 +46,7 @@ ping www.baidu.com
 
 ### 1.3 安装完成
 
-``` bash
+```bash
 # 保持系统最新版本
 yum -y update && yum -y upgrade && yum -y autoremove
 ```
@@ -55,7 +55,7 @@ yum -y update && yum -y upgrade && yum -y autoremove
 
 ### 1.4 配置 yum 源
 
-``` text
+```text
 前言：Linux 属于国外的系统，要想安装软件，通过系统自带的国外软件源，有的会感觉有些卡顿，所以有了国内软件源的出现。其中用的比较多的就是清华源、阿里源、中科大源等等，笔者最常用的就是清华源，当然了，下载一些 Linux 的镜像也会去下载，速度什么的还是不错的。
 ```
 
@@ -63,7 +63,7 @@ yum -y update && yum -y upgrade && yum -y autoremove
 
 在镜像站一般会有介绍如何使用该镜像源的方法（系统名称右上角有问号，点击即可），这里简单介绍下。
 
-``` bash
+```text
 # 备份原来的源
 sudo mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
 # 使用 vi ，创建一个新的文件
@@ -72,7 +72,7 @@ vi  /etc/yum.repos.d/CentOS-Base.repo
 
 进入后，按 `i` 进入编辑模式，将以下内容复制进去。
 
-``` bash
+```text
 # CentOS-Base.repo
 #
 # The mirror system uses the connecting IP address of the client and the
@@ -120,7 +120,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
 使用命令进行版本的修改。
 
-``` bash
+```text
 # 修改源系统版本
 sudo sed -i `s/$releasever/7/g` /etc/yum.repos.d/CentOS-Base.repo
 # 更新软件包缓存
@@ -131,7 +131,7 @@ sudo yum makecache
 
 阿里源配置首先也是要备份源的，执行命令。
 
-``` bash
+```text
 # 备份系统源
 sudo mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
 
@@ -151,7 +151,7 @@ sudo yum makecache
 配置完 yum 源之后，使用命令 `yum repolist` 即可查看 yum 源的信息。
 
 ## 2. 搭建 ELK
-  
+
 > 简介：ELK 是一整套解决方案，是三个软件产品的首字母缩写， Elasticsearch、 Logstash 和 Kibana。这三款软件都是开源产品，通常是配合使用，简称为 *ELK 协议栈*。
 
 日志主要包括系统日志、应用程序日志和安全日志。系统运维和开发可以通过日志了解服务器软硬件信息、检查配置过程中的错误击错误发生的原因。经常分析日志可以了解服务器的负荷，性能安全，从而及时采取措施纠正错误。
